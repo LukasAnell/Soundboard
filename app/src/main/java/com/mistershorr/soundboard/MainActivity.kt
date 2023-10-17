@@ -55,6 +55,13 @@ class MainActivity : AppCompatActivity() {
         initializeSoundPool()
         setListeners()
         readJSON()
+        var shortSong = "G 250 G 250 A 500 G 500 C 500 B 1000 G 250 G 250 A 500 G 500 D 500 C 1000 G 250 G 250 G 250 E 250 C 250 B 250 A 500 F 500 F 250 E 250 C 250 D 500 C 1000"
+        convertStringToList(shortSong)
+        // Log.d(TAG, "onCreate: $separatedNoteList")
+    }
+
+    private fun convertStringToList(notesAndDurations: String) {
+        separatedNoteList = notesAndDurations.split(" ")
     }
 
 
@@ -125,7 +132,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun playNote(noteId: Int) {
-        soundPool.play(noteId, 1f, 1f, 1, 0, 1f)
+        soundPool.play(noteId, 1f, 1f, 1, 0, 0.5f)
     }
 
     private inner class SoundBoardListener : View.OnClickListener {
