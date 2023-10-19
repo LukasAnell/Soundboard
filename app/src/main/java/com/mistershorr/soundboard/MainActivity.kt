@@ -38,9 +38,21 @@ class MainActivity : AppCompatActivity() {
     var gNote = 0
     var gSharpNote = 0
     var lowGNote = 0
+    var highANote = 0
+    var highBNote = 0
+    var highBbNote = 0
+    var highCNote = 0
+    var highCSharpNote = 0
+    var highDNote = 0
+    var highDSharpNote = 0
+    var highENote = 0
+    var highFNote = 0
+    var highFSharpNote = 0
+    var highGNote = 0
+    var highGSharpNote = 0
 
-    lateinit var noteList: List<Note>
-    lateinit var separatedNoteList: List<String>
+    lateinit var noteList: ArrayList<Note>
+    var separatedNoteList: ArrayList<Note> = ArrayList()
 
     companion object {
         const val TAG = "MainActivity"
@@ -55,13 +67,58 @@ class MainActivity : AppCompatActivity() {
         initializeSoundPool()
         setListeners()
         readJSON()
-        var shortSong = "G 250 G 250 A 500 G 500 C 500 B 1000 G 250 G 250 A 500 G 500 D 500 C 1000 G 250 G 250 G 250 E 250 C 250 B 250 A 500 F 500 F 250 E 250 C 250 D 500 C 1000"
-        convertStringToList(shortSong)
-        // Log.d(TAG, "onCreate: $separatedNoteList")
+        Log.d(TAG, "onCreate: $separatedNoteList")
+        Thread.sleep(5000)
+        playSong(noteList)
+    }
+
+    private fun playSong(song: List<Note>) {
+        for(note in song) {
+            when(note.note) {
+                "A" -> playNote(aNote)
+                "Bb" -> playNote(bbNote)
+                "B" -> playNote(bNote)
+                "C" -> playNote(cNote)
+                "C#" -> playNote(cSharpNote)
+                "D" -> playNote(dNote)
+                "D#" -> playNote(dSharpNote)
+                "E" -> playNote(eNote)
+                "F" -> playNote(fNote)
+                "F#" -> playNote(fSharpNote)
+                "G" -> playNote(gNote)
+                "G#" -> playNote(gSharpNote)
+                "LG" -> playNote(lowGNote)
+                "HA" -> playNote(highANote)
+                "HB" -> playNote(highBNote)
+                "HBb" -> playNote(highBbNote)
+                "HC" -> playNote(highCNote)
+                "HC#" -> playNote(highCSharpNote)
+                "HD" -> playNote(highDNote)
+                "HD#" -> playNote(highDSharpNote)
+                "HE" -> playNote(highENote)
+                "HF" -> playNote(highFNote)
+                "HF#" -> playNote(highFSharpNote)
+                "HG" -> playNote(highGNote)
+                "HG#" -> playNote(highGSharpNote)
+            }
+            // delay for the delay
+            delay(note.duration.toLong())
+        }
+    }
+
+    private fun delay(time: Long) {
+        try {
+            Thread.sleep(time)
+        } catch (e: InterruptedException) {
+            e.printStackTrace()
+        }
     }
 
     private fun convertStringToList(notesAndDurations: String) {
-        separatedNoteList = notesAndDurations.split(" ")
+        var temp = notesAndDurations.split(" ")
+        for(i in temp.indices step 2) {
+            separatedNoteList.add(Note(temp[i], temp[i+1].toInt()))
+        }
     }
 
 
@@ -128,11 +185,23 @@ class MainActivity : AppCompatActivity() {
         fSharpNote = soundPool.load(this, R.raw.scalefs, 1)
         gNote = soundPool.load(this, R.raw.scaleg, 1)
         gSharpNote = soundPool.load(this, R.raw.scalegs, 1)
-        lowGNote = soundPool.load(this, R.raw.scaleg, 1)
+        lowGNote = soundPool.load(this, R.raw.scalelowg, 1)
+        highANote = soundPool.load(this, R.raw.scalehigha, 1)
+        highBNote = soundPool.load(this, R.raw.scalehighb, 1)
+        highBbNote = soundPool.load(this, R.raw.scalehighbb, 1)
+        highCNote = soundPool.load(this, R.raw.scalehighc, 1)
+        highCSharpNote = soundPool.load(this, R.raw.scalehighcs, 1)
+        highDNote = soundPool.load(this, R.raw.scalehighd, 1)
+        highDSharpNote = soundPool.load(this, R.raw.scalehighds, 1)
+        highENote = soundPool.load(this, R.raw.scalehighe, 1)
+        highFNote = soundPool.load(this, R.raw.scalehighf, 1)
+        highFSharpNote = soundPool.load(this, R.raw.scalehighfs, 1)
+        highGNote = soundPool.load(this, R.raw.scalehighg, 1)
+        highGSharpNote = soundPool.load(this, R.raw.scalehighgs, 1)
     }
 
     private fun playNote(noteId: Int) {
-        soundPool.play(noteId, 1f, 1f, 1, 0, 0.5f)
+        soundPool.play(noteId, 1f, 1f, 1, 0, 1.0f)
     }
 
     private inner class SoundBoardListener : View.OnClickListener {
