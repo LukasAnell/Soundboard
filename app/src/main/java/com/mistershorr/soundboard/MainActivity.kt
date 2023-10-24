@@ -100,6 +100,7 @@ class MainActivity : AppCompatActivity() {
                 "HF#" -> playNote(highFSharpNote)
                 "HG" -> playNote(highGNote)
                 "HG#" -> playNote(highGSharpNote)
+                "" -> delay(note.duration.toLong())
             }
             // delay for the delay
             delay(note.duration.toLong())
@@ -123,7 +124,7 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun readJSON() {
-        val inputStream = resources.openRawResource(R.raw.song)
+        val inputStream = resources.openRawResource(R.raw.song2)
         val jsonString = inputStream.bufferedReader().use {
             it.readText()
         }
