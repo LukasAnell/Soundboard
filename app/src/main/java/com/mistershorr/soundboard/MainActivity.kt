@@ -80,6 +80,12 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun playNote(note: String) {
+        // ?: is the elvis operator. it lets you provide a default value
+        // if the value is null
+        playNote(noteMap[note] ?: 0)
+    }
+
     private fun delay(time: Long) {
         try {
             Thread.sleep(time)
