@@ -97,7 +97,7 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun readJSON() {
-        val inputStream = resources.openRawResource(R.raw.song)
+        val inputStream = resources.openRawResource(R.raw.song2)
         val jsonString = inputStream.bufferedReader().use {
             it.readText()
         }
