@@ -7,6 +7,23 @@
     tools:context=".MainActivity">
 
     <Button
+        android:id="@+id/button_main_playSong"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Play Song"
+        app:layout_constraintBottom_toTopOf="@+id/button_main_b"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/group_main_noteButtons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="button_main_a,button_main_b,button_main_c,button_main_bb,button_main_cSharp,button_main_d,button_main_dSharp,button_main_e,button_main_f,button_main_fSharp,button_main_g,button_main_gSharp" />
+
+    <Button
         android:id="@+id/button_main_a"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
