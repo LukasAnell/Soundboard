@@ -7,24 +7,30 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import androidx.constraintlayout.widget.Group
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.mistershorr.soundboard.databinding.ActivityMainBinding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
-
-    lateinit var buttonA : Button
-    lateinit var buttonBb : Button
-    lateinit var buttonB : Button
-    lateinit var buttonC : Button
-    lateinit var buttonCSharp : Button
-    lateinit var buttonD : Button
-    lateinit var buttonDSharp : Button
-    lateinit var buttonE : Button
-    lateinit var buttonF : Button
-    lateinit var buttonFSharp : Button
-    lateinit var buttonG : Button
-    lateinit var buttonGSharp : Button
-    lateinit var soundPool : SoundPool
+    lateinit var buttonA: Button
+    lateinit var buttonBb: Button
+    lateinit var buttonB: Button
+    lateinit var buttonC: Button
+    lateinit var buttonCSharp: Button
+    lateinit var buttonD: Button
+    lateinit var buttonDSharp: Button
+    lateinit var buttonE: Button
+    lateinit var buttonF: Button
+    lateinit var buttonFSharp: Button
+    lateinit var buttonG: Button
+    lateinit var buttonGSharp: Button
+    lateinit var buttonPlaySong: Button
+    lateinit var groupMainNoteButtons: Group
+    lateinit var soundPool: SoundPool
     var aNote = 0
     var bbNote = 0
     var bNote = 0
@@ -51,6 +57,8 @@ class MainActivity : AppCompatActivity() {
     var highGNote = 0
     var highGSharpNote = 0
 
+    lateinit var binding: ActivityMainBinding
+
     lateinit var noteList: ArrayList<Note>
     var separatedNoteList: ArrayList<Note> = ArrayList()
     var noteMap = HashMap<String, Int>()
@@ -59,24 +67,33 @@ class MainActivity : AppCompatActivity() {
         const val TAG = "MainActivity"
     }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         wireWidgets()
         initializeSoundPool()
         setListeners()
         readJSON()
         // Log.d(TAG, "onCreate: $separatedNoteList")
         Thread.sleep(5000)
-        playSong(noteList)
+        // playSong(noteList)
     }
 
     private fun playSong(song: List<Note>) {
+        GlobalScope.launch(Dispatchers.Main) {
+            binding.groupMainNoteButtons.referencedIds.forEach {
+                findViewById<Button>(it).isEnabled = false
+            }
+        }
         for(note in song) {
-            playNote(noteMap[note.note]?: 0)
+            playNote(noteMap.get(note.note) ?: 0)
             delay(note.duration.toLong())
+        }
+        GlobalScope.launch(Dispatchers.Main) {
+            binding.groupMainNoteButtons.referencedIds.forEach {
+                findViewById<Button>(it).isEnabled = true
+            }
         }
     }
 
@@ -103,7 +120,7 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun readJSON() {
-        val inputStream = resources.openRawResource(R.raw.song2)
+        val inputStream = resources.openRawResource(R.raw.song)
         val jsonString = inputStream.bufferedReader().use {
             it.readText()
         }
@@ -128,6 +145,11 @@ class MainActivity : AppCompatActivity() {
         buttonFSharp.setOnClickListener(soundBoardListener)
         buttonG.setOnClickListener(soundBoardListener)
         buttonGSharp.setOnClickListener(soundBoardListener)
+        buttonPlaySong.setOnClickListener {
+            GlobalScope.launch {
+                playSong(noteList)
+            }
+        }
     }
 
 
@@ -144,6 +166,8 @@ class MainActivity : AppCompatActivity() {
         buttonFSharp = findViewById(R.id.button_main_fSharp)
         buttonG = findViewById(R.id.button_main_g)
         buttonGSharp = findViewById(R.id.button_main_gSharp)
+        buttonPlaySong = findViewById(R.id.button_main_playSong)
+        groupMainNoteButtons = findViewById(R.id.group_main_noteButtons)
     }
 
     private fun initializeSoundPool() {
