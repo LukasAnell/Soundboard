@@ -1,170 +1,154 @@
 [
   {
-    "duration": 500,
-    "note": "LG"
+    "note": "C",
+    "duration": 1500
   },
   {
-    "duration": 500,
-    "note": "LG"
+    "note": "B",
+    "duration": 500
   },
   {
-    "duration": 500,
-    "note": "D"
+    "note": "A",
+    "duration": 500
   },
   {
-    "duration": 500,
-    "note": "D"
+    "note": "LG",
+    "duration": 500
   },
   {
-    "duration": 500,
-    "note": "E"
+    "note": "F",
+    "duration": 1500
   },
   {
-    "duration": 500,
-    "note": "E"
+    "note": "LG",
+    "duration": 500
   },
   {
-    "duration": 1000,
-    "note": "D"
+    "note": "A",
+    "duration": 500
   },
   {
-    "duration": 500,
-    "note": "C"
+    "note": "C",
+    "duration": 500
   },
   {
-    "duration": 500,
-    "note": "C"
+    "note": "B",
+    "duration": 1500
   },
   {
-    "duration": 500,
-    "note": "B"
+    "note": "A",
+    "duration": 500
   },
   {
-    "duration": 500,
-    "note": "B"
+    "note": "LG",
+    "duration": 500
   },
   {
-    "duration": 500,
-    "note": "A"
+    "note": "F",
+    "duration": 500
   },
   {
-    "duration": 500,
-    "note": "A"
+    "note": "E",
+    "duration": 3000
   },
   {
-    "duration": 1000,
-    "note": "LG"
+    "note": "A",
+    "duration": 1500
   },
   {
-    "duration": 500,
-    "note": "D"
+    "note": "LG",
+    "duration": 500
   },
   {
-    "duration": 500,
-    "note": "D"
+    "note": "F",
+    "duration": 500
   },
   {
-    "duration": 500,
-    "note": "C"
+    "note": "E",
+    "duration": 500
   },
   {
-    "duration": 500,
-    "note": "C"
+    "note": "D",
+    "duration": 1500
   },
   {
-    "duration": 500,
-    "note": "B"
+    "note": "E",
+    "duration": 500
   },
   {
-    "duration": 500,
-    "note": "B"
+    "note": "F",
+    "duration": 500
   },
   {
-    "duration": 1000,
-    "note": "A"
+    "note": "A",
+    "duration": 500
   },
   {
-    "duration": 500,
-    "note": "D"
+    "note": "G#",
+    "duration": 1500
   },
   {
-    "duration": 500,
-    "note": "D"
+    "note": "F",
+    "duration": 500
   },
   {
-    "duration": 500,
-    "note": "C"
+    "note": "E",
+    "duration": 500
   },
   {
-    "duration": 500,
-    "note": "C"
+    "note": "D",
+    "duration": 500
   },
   {
-    "duration": 500,
-    "note": "B"
+    "note": "C",
+    "duration": 3000
   },
   {
-    "duration": 500,
-    "note": "B"
+    "note": "C#",
+    "duration": 1000
   },
   {
-    "duration": 1000,
-    "note": "A"
+    "note": "E",
+    "duration": 500
   },
   {
-    "duration": 500,
-    "note": "LG"
+    "note": "A",
+    "duration": 500
   },
   {
-    "duration": 500,
-    "note": "LG"
+    "note": "A",
+    "duration": 2000
   },
   {
-    "duration": 500,
-    "note": "D"
+    "note": "A",
+    "duration": 1000
   },
   {
-    "duration": 500,
-    "note": "D"
+    "note": "C",
+    "duration": 1000
   },
   {
-    "duration": 500,
-    "note": "E"
+    "note": "B",
+    "duration": 1000
   },
   {
-    "duration": 500,
-    "note": "E"
+    "note": "G",
+    "duration": 3000
   },
   {
-    "duration": 1000,
-    "note": "D"
+    "note": "G",
+    "duration": 2000
   },
   {
-    "duration": 500,
-    "note": "C"
+    "note": "B",
+    "duration": 500
   },
   {
-    "duration": 500,
-    "note": "C"
+    "note": "F",
+    "duration": 500
   },
   {
-    "duration": 500,
-    "note": "B"
-  },
-  {
-    "duration": 500,
-    "note": "B"
-  },
-  {
-    "duration": 500,
-    "note": "A"
-  },
-  {
-    "duration": 500,
-    "note": "A"
-  },
-  {
-    "duration": 1000,
-    "note": "LG"
+    "note": "F",
+    "duration": 2000
   }
 ]

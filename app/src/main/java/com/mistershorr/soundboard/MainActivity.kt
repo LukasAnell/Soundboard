@@ -87,8 +87,8 @@ class MainActivity : AppCompatActivity() {
             }
         }
         for(note in song) {
-            playNote(noteMap.get(note.note) ?: 0)
-            delay(note.duration.toLong())
+            playNote(noteMap[note.note] ?: 0)
+            delay(note.duration.toLong() / 3)
         }
         GlobalScope.launch(Dispatchers.Main) {
             binding.groupMainNoteButtons.referencedIds.forEach {
@@ -112,7 +112,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun convertStringToList(notesAndDurations: String) {
-        var temp = notesAndDurations.split(" ")
+        val temp = notesAndDurations.split(" ")
         for(i in temp.indices step 2) {
             separatedNoteList.add(Note(temp[i], temp[i+1].toInt()))
         }
