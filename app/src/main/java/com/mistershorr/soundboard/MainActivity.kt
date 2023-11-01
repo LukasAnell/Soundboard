@@ -16,92 +16,98 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
-    lateinit var buttonA: Button
-    lateinit var buttonBb: Button
-    lateinit var buttonB: Button
-    lateinit var buttonC: Button
-    lateinit var buttonCSharp: Button
-    lateinit var buttonD: Button
-    lateinit var buttonDSharp: Button
-    lateinit var buttonE: Button
-    lateinit var buttonF: Button
-    lateinit var buttonFSharp: Button
-    lateinit var buttonG: Button
-    lateinit var buttonGSharp: Button
-    lateinit var buttonPlaySong: Button
-    lateinit var groupMainNoteButtons: Group
     lateinit var soundPool: SoundPool
+    var aZero = 0
+    var aOne = 0
+    var aTwo = 0
+    var aThree = 0
+    var aFour = 0
+    var aFive = 0
+    var aSeven = 0
 
-//    var A0 = 0
-//    var A1 = 0
-//    var A2 = 0
-    var A3 = 0
-//    var A4 = 0
-//    var A5 = 0
-//    var A7 = 0
-//    var B1 = 0
-//    var B2 = 0
-    var B3 = 0
-//    var B4 = 0
-//    var B5 = 0
-//    var B7 = 0
-//    var Bb1 = 0
-//    var Bb2 = 0
-    var Bb3 = 0
-//    var Bb4 = 0
-//    var Bb5 = 0
-//    var Bb7 = 0
-//    var C1 = 0
-//    var C2 = 0
-//    var C3 = 0
-    var C4 = 0
-//    var C5 = 0
-//    var C6 = 0
-//    var C8 = 0
-//    var CSharp2 = 0
-//    var CSharp3 = 0
-    var CSharp4 = 0
-//    var CSharp5 = 0
-//    var D1 = 0
-//    var D2 = 0
-//    var D3 = 0
-    var D4 = 0
-//    var D5 = 0
-//    var DSharp1 = 0
-//    var DSharp2 = 0
-//    var DSharp3 = 0
-    var DSharp4 = 0
-//    var DSharp5 = 0
-//    var E1 = 0
-//    var E2 = 0
-//    var E3 = 0
-    var E4 = 0
-//    var E5 = 0
-//    var F1 = 0
-//    var F2 = 0
-//    var F3 = 0
-    var F4 = 0
-//    var F5 = 0
-//    var FSharp0 = 0
-//    var FSharp1 = 0
-//    var FSharp2 = 0
-//    var FSharp3 = 0
-    var FSharp4 = 0
-//    var FSharp5 = 0
-//    var G0 = 0
-//    var G1 = 0
-//    var G2 = 0
-//    var G3 = 0
-    var G4 = 0
-//    var G5 = 0
-//    var GSharp0 = 0
-//    var GSharp1 = 0
-//    var GSharp2 = 0
-//    var GSharp3 = 0
-    var GSharp4 = 0
-//    var GSharp5 = 0
+    var bbOne = 0
+    var bbTwo = 0
+    var bbThree = 0
+    var bbFour = 0
+    var bbFive = 0
+    var bbSeven = 0
 
-    lateinit var binding: ActivityMainBinding
+    var bOne = 0
+    var bTwo = 0
+    var bThree = 0
+    var bFour = 0
+    var bFive = 0
+    var bSeven = 0
+
+    var cOne = 0
+    var cTwo = 0
+    var cThree = 0
+    var cFour = 0
+    var cFive = 0
+    var cEight = 0
+
+    var cSharpTwo = 0
+    var cSharpThree = 0
+    var cSharpFour = 0
+    var cSharpFive = 0
+
+    var dOne = 0
+    var dTwo = 0
+    var dThree = 0
+    var dFour = 0
+    var dFive = 0
+
+    var dSharpOne = 0
+    var dSharpTwo = 0
+    var dSharpThree = 0
+    var dSharpFour = 0
+    var dSharpFive = 0
+
+    var eOne = 0
+    var eTwo = 0
+    var eThree = 0
+    var eFour = 0
+    var eFive = 0
+
+    var fOne = 0
+    var fTwo = 0
+    var fThree = 0
+    var fFour = 0
+    var fFive = 0
+
+    var fSharpOne = 0
+    var fSharpTwo = 0
+    var fSharpThree = 0
+    var fSharpFour = 0
+    var fSharpFive = 0
+
+    var gOne = 0
+    var gTwo = 0
+    var gThree = 0
+    var gFour = 0
+    var gFive = 0
+
+    var gSharpOne = 0
+    var gSharpTwo = 0
+    var gSharpThree = 0
+    var gSharpFour = 0
+    var gSharpFive = 0
+
+    var lowGNote = 0
+    var highANote = 0
+    var highBNote = 0
+    var highBbNote = 0
+    var highCNote = 0
+    var highCSharpNote = 0
+    var highDNote = 0
+    var highDSharpNote = 0
+    var highENote = 0
+    var highFNote = 0
+    var highFSharpNote = 0
+    var highGNote = 0
+    var highGSharpNote = 0
+
+    private lateinit var binding: ActivityMainBinding
 
     lateinit var noteList: ArrayList<Note>
     var separatedNoteList: ArrayList<Note> = ArrayList()
@@ -115,7 +121,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        wireWidgets()
+
         initializeSoundPool()
         setListeners()
         readJSON()
@@ -133,6 +139,25 @@ class MainActivity : AppCompatActivity() {
         for(note in song) {
             playNote(noteMap[note.note] ?: 0)
             delay(note.duration.toLong() / 3)
+        }
+        GlobalScope.launch(Dispatchers.Main) {
+            binding.groupMainNoteButtons.referencedIds.forEach {
+                findViewById<Button>(it).isEnabled = true
+            }
+        }
+    }
+
+    private fun playSongWithChords(song: List<Chord>) {
+        GlobalScope.launch(Dispatchers.Main) {
+            binding.groupMainNoteButtons.referencedIds.forEach {
+                findViewById<Button>(it).isEnabled = false
+            }
+        }
+        for(chord in song) {
+            for (note in chord.chord) {
+                playNote(noteMap[note.note] ?: 0)
+            }
+            delay(chord.duration.toLong() / 3)
         }
         GlobalScope.launch(Dispatchers.Main) {
             binding.groupMainNoteButtons.referencedIds.forEach {
@@ -177,41 +202,23 @@ class MainActivity : AppCompatActivity() {
 
     private fun setListeners() {
         val soundBoardListener = SoundBoardListener()
-        buttonA.setOnClickListener(soundBoardListener)
-        buttonBb.setOnClickListener(soundBoardListener)
-        buttonB.setOnClickListener(soundBoardListener)
-        buttonC.setOnClickListener(soundBoardListener)
-        buttonCSharp.setOnClickListener(soundBoardListener)
-        buttonD.setOnClickListener(soundBoardListener)
-        buttonDSharp.setOnClickListener(soundBoardListener)
-        buttonE.setOnClickListener(soundBoardListener)
-        buttonF.setOnClickListener(soundBoardListener)
-        buttonFSharp.setOnClickListener(soundBoardListener)
-        buttonG.setOnClickListener(soundBoardListener)
-        buttonGSharp.setOnClickListener(soundBoardListener)
-        buttonPlaySong.setOnClickListener {
+        binding.buttonMainA.setOnClickListener(soundBoardListener)
+        binding.buttonMainBb.setOnClickListener(soundBoardListener)
+        binding.buttonMainB.setOnClickListener(soundBoardListener)
+        binding.buttonMainC.setOnClickListener(soundBoardListener)
+        binding.buttonMainCSharp.setOnClickListener(soundBoardListener)
+        binding.buttonMainD.setOnClickListener(soundBoardListener)
+        binding.buttonMainDSharp.setOnClickListener(soundBoardListener)
+        binding.buttonMainE.setOnClickListener(soundBoardListener)
+        binding.buttonMainF.setOnClickListener(soundBoardListener)
+        binding.buttonMainFSharp.setOnClickListener(soundBoardListener)
+        binding.buttonMainG.setOnClickListener(soundBoardListener)
+        binding.buttonMainGSharp.setOnClickListener(soundBoardListener)
+        binding.buttonMainPlaySong.setOnClickListener {
             GlobalScope.launch {
                 playSong(noteList)
             }
         }
-    }
-
-
-    private fun wireWidgets() {
-        buttonA = findViewById(R.id.button_main_a)
-        buttonBb = findViewById(R.id.button_main_bb)
-        buttonB = findViewById(R.id.button_main_b)
-        buttonC = findViewById(R.id.button_main_c)
-        buttonCSharp = findViewById(R.id.button_main_cSharp)
-        buttonD = findViewById(R.id.button_main_d)
-        buttonDSharp = findViewById(R.id.button_main_dSharp)
-        buttonE = findViewById(R.id.button_main_e)
-        buttonF = findViewById(R.id.button_main_f)
-        buttonFSharp = findViewById(R.id.button_main_fSharp)
-        buttonG = findViewById(R.id.button_main_g)
-        buttonGSharp = findViewById(R.id.button_main_gSharp)
-        buttonPlaySong = findViewById(R.id.button_main_playSong)
-        groupMainNoteButtons = findViewById(R.id.group_main_noteButtons)
     }
 
     private fun initializeSoundPool() {
@@ -221,74 +228,108 @@ class MainActivity : AppCompatActivity() {
 //           // isSoundPoolLoaded = true
 //        })
 
-        noteMap["A0"] = soundPool.load(this, R.raw.a0, 1)
-        noteMap["A1"] = soundPool.load(this, R.raw.a1, 1)
-        noteMap["A2"] = soundPool.load(this, R.raw.a2, 1)
-        noteMap["A3"] = soundPool.load(this, R.raw.a3, 1)
-        noteMap["A4"] = soundPool.load(this, R.raw.a4, 1)
-        noteMap["A5"] = soundPool.load(this, R.raw.a5, 1)
-        noteMap["A7"] = soundPool.load(this, R.raw.a7, 1)
-        noteMap["B1"] = soundPool.load(this, R.raw.b1, 1)
-        noteMap["B2"] = soundPool.load(this, R.raw.b2, 1)
-        noteMap["B3"] = soundPool.load(this, R.raw.b3, 1)
-        noteMap["B4"] = soundPool.load(this, R.raw.b4, 1)
-        noteMap["B5"] = soundPool.load(this, R.raw.b5, 1)
-        noteMap["B7"] = soundPool.load(this, R.raw.b7, 1)
-        noteMap["Bb1"] = soundPool.load(this, R.raw.bb1, 1)
-        noteMap["Bb2"] = soundPool.load(this, R.raw.bb2, 1)
-        noteMap["Bb3"] = soundPool.load(this, R.raw.b3, 1)
-        noteMap["Bb4"] = soundPool.load(this, R.raw.bb4, 1)
-        noteMap["Bb5"] = soundPool.load(this, R.raw.bb5, 1)
-        noteMap["Bb7"] = soundPool.load(this, R.raw.bb7, 1)
-        noteMap["C1"] = soundPool.load(this, R.raw.c1, 1)
-        noteMap["C2"] = soundPool.load(this, R.raw.c2, 1)
-        noteMap["C3"] = soundPool.load(this, R.raw.c3, 1)
-        noteMap["C4"] = soundPool.load(this, R.raw.c4, 1)
-        noteMap["C5"] = soundPool.load(this, R.raw.c5, 1)
-        noteMap["C6"] = soundPool.load(this, R.raw.c6, 1)
-        noteMap["C8"] = soundPool.load(this, R.raw.c8, 1)
-        noteMap["CSharp2"] = soundPool.load(this, R.raw.csharp2, 1)
-        noteMap["CSharp3"] = soundPool.load(this, R.raw.csharp3, 1)
-        noteMap["CSharp4"] = soundPool.load(this, R.raw.csharp4, 1)
-        noteMap["CSharp5"] = soundPool.load(this, R.raw.csharp5, 1)
-        noteMap["D1"] = soundPool.load(this, R.raw.d1, 1)
-        noteMap["D2"] = soundPool.load(this, R.raw.d2, 1)
-        noteMap["D3"] = soundPool.load(this, R.raw.d3, 1)
-        noteMap["D4"] = soundPool.load(this, R.raw.d4, 1)
-        noteMap["D5"] = soundPool.load(this, R.raw.d5, 1)
-        noteMap["DSharp1"] = soundPool.load(this, R.raw.dsharp1, 1)
-        noteMap["DSharp2"] = soundPool.load(this, R.raw.dsharp2, 1)
-        noteMap["DSharp3"] = soundPool.load(this, R.raw.dsharp3, 1)
-        noteMap["DSharp4"] = soundPool.load(this, R.raw.dsharp4, 1)
-        noteMap["DSharp5"] = soundPool.load(this, R.raw.dsharp5, 1)
-        noteMap["E1"] = soundPool.load(this, R.raw.f1, 1)
-        noteMap["E2"] = soundPool.load(this, R.raw.f2, 1)
-        noteMap["E3"] = soundPool.load(this, R.raw.f3, 1)
-        noteMap["E4"] = soundPool.load(this, R.raw.f4, 1)
-        noteMap["E5"] = soundPool.load(this, R.raw.f5, 1)
-        noteMap["F1"] = soundPool.load(this, R.raw.f1, 1)
-        noteMap["F2"] = soundPool.load(this, R.raw.f2, 1)
-        noteMap["F3"] = soundPool.load(this, R.raw.f3, 1)
-        noteMap["F4"] = soundPool.load(this, R.raw.f4, 1)
-        noteMap["F5"] = soundPool.load(this, R.raw.f5, 1)
-        noteMap["FSharp0"] = soundPool.load(this, R.raw.fsharp0, 1)
-        noteMap["FSharp1"] = soundPool.load(this, R.raw.fsharp1, 1)
-        noteMap["FSharp2"] = soundPool.load(this, R.raw.fsharp2, 1)
-        noteMap["FSharp3"] = soundPool.load(this, R.raw.fsharp3, 1)
-        noteMap["FSharp4"] = soundPool.load(this, R.raw.fsharp4, 1)
-        noteMap["FSharp5"] = soundPool.load(this, R.raw.fsharp5, 1)
-        noteMap["G0"] = soundPool.load(this, R.raw.g0, 1)
-        noteMap["G1"] = soundPool.load(this, R.raw.g1, 1)
-        noteMap["G2"] = soundPool.load(this, R.raw.g2, 1)
-        noteMap["G3"] = soundPool.load(this, R.raw.g3, 1)
-        noteMap["G4"] = soundPool.load(this, R.raw.g4, 1)
-        noteMap["G5"] = soundPool.load(this, R.raw.g5, 1)
-        noteMap["GSharp0"] = soundPool.load(this, R.raw.gsharp0, 1)
-        noteMap["GSharp1"] = soundPool.load(this, R.raw.gsharp1, 1)
-        noteMap["GSharp2"] = soundPool.load(this, R.raw.gsharp2, 1)
-        noteMap["GSharp3"] = soundPool.load(this, R.raw.gsharp3, 1)
-        noteMap["GSharp4"] = soundPool.load(this, R.raw.gsharp4, 1)
-        noteMap["GSharp5"] = soundPool.load(this, R.raw.gsharp5, 1)
+        aZero = soundPool.load(this, R.raw.azero, 1)
+        aOne = soundPool.load(this, R.raw.aone, 1)
+        aTwo = soundPool.load(this, R.raw.atwo, 1)
+        aThree = soundPool.load(this, R.raw.athree, 1)
+        aFour = soundPool.load(this, R.raw.afour, 1)
+        aFive = soundPool.load(this, R.raw.afive, 1)
+        aSeven = soundPool.load(this, R.raw.aseven, 1)
+
+        bbOne = soundPool.load(this, R.raw.bbone, 1)
+        bbTwo = soundPool.load(this, R.raw.bbtwo, 1)
+        bbThree = soundPool.load(this, R.raw.bbthree, 1)
+        bbFour = soundPool.load(this, R.raw.bbfour, 1)
+        bbFive = soundPool.load(this, R.raw.bbfive, 1)
+        bbSeven = soundPool.load(this, R.raw.bbseven, 1)
+
+        bOne = soundPool.load(this, R.raw.bone, 1)
+        bTwo = soundPool.load(this, R.raw.btwo, 1)
+        bThree = soundPool.load(this, R.raw.bthree, 1)
+        bFour = soundPool.load(this, R.raw.bfour, 1)
+        bFive = soundPool.load(this, R.raw.bfive, 1)
+        bSeven = soundPool.load(this, R.raw.bseven, 1)
+
+        cOne = soundPool.load(this, R.raw.cone, 1)
+        cTwo = soundPool.load(this, R.raw.ctwo, 1)
+        cThree = soundPool.load(this, R.raw.cthree, 1)
+        cFour = soundPool.load(this, R.raw.cfour, 1)
+        cFive = soundPool.load(this, R.raw.cfive, 1)
+        cEight = soundPool.load(this, R.raw.ceight, 1)
+
+        cSharpTwo = soundPool.load(this, R.raw.cstwo, 1)
+        cSharpThree = soundPool.load(this, R.raw.csthree, 1)
+        cSharpFour = soundPool.load(this, R.raw.csfour, 1)
+        cSharpFive = soundPool.load(this, R.raw.csfive, 1)
+
+        dOne = soundPool.load(this, R.raw.done, 1)
+        dTwo = soundPool.load(this, R.raw.dtwo, 1)
+        dThree = soundPool.load(this, R.raw.dthree, 1)
+        dFour = soundPool.load(this, R.raw.dfour, 1)
+        dFive = soundPool.load(this, R.raw.dfive, 1)
+
+        dSharpOne = soundPool.load(this, R.raw.dsone, 1)
+        dSharpTwo = soundPool.load(this, R.raw.dstwo, 1)
+        dSharpThree = soundPool.load(this, R.raw.dsthree, 1)
+        dSharpFour = soundPool.load(this, R.raw.dsfour, 1)
+        dSharpFive = soundPool.load(this, R.raw.dsfive, 1)
+
+        eOne = soundPool.load(this, R.raw.eone, 1)
+        eTwo = soundPool.load(this, R.raw.etwo, 1)
+        eThree = soundPool.load(this, R.raw.ethree, 1)
+        eFour = soundPool.load(this, R.raw.efour, 1)
+        eFive = soundPool.load(this, R.raw.efive, 1)
+
+        fOne = soundPool.load(this, R.raw.fone, 1)
+        fTwo = soundPool.load(this, R.raw.ftwo, 1)
+        fThree = soundPool.load(this, R.raw.fthree, 1)
+        fFour = soundPool.load(this, R.raw.ffour, 1)
+        fFive = soundPool.load(this, R.raw.ffive, 1)
+
+        fSharpOne = soundPool.load(this, R.raw.fsone, 1)
+        fSharpTwo = soundPool.load(this, R.raw.fstwo, 1)
+        fSharpThree = soundPool.load(this, R.raw.fsthree, 1)
+        fSharpFour = soundPool.load(this, R.raw.fsfour, 1)
+        fSharpFive = soundPool.load(this, R.raw.fsfive, 1)
+
+        gOne = soundPool.load(this, R.raw.gone, 1)
+        gTwo = soundPool.load(this, R.raw.gtwo, 1)
+        gThree = soundPool.load(this, R.raw.gthree, 1)
+        gFour = soundPool.load(this, R.raw.gfour, 1)
+        gFive = soundPool.load(this, R.raw.gfive, 1)
+
+        gSharpOne = soundPool.load(this, R.raw.gsone, 1)
+        gSharpTwo = soundPool.load(this, R.raw.gstwo, 1)
+        gSharpThree = soundPool.load(this, R.raw.gsthree, 1)
+        gSharpFour = soundPool.load(this, R.raw.gsfour, 1)
+        gSharpFive = soundPool.load(this, R.raw.gsfive, 1)
+
+        noteMap["A0"] = aZero
+        noteMap["A1"] = aOne
+        noteMap["A2"] = aTwo
+        noteMap["A3"] = aThree
+        noteMap["A4"] = aFour
+        noteMap["A5"] = aFive
+        noteMap["A7"] = aSeven
+
+        noteMap["Bb1"] = bbOne
+        noteMap["Bb2"] = bbTwo
+        noteMap["Bb3"] = bbThree
+        noteMap["Bb4"] = bbFour
+        noteMap["Bb5"] = bbFive
+        noteMap["Bb7"] = bbSeven
+
+        noteMap["B1"] = bOne
+        noteMap["B2"] = bTwo
+        noteMap["B3"] = bThree
+        noteMap["B4"] = bFour
+        noteMap["B5"] = bFive
+        noteMap["B7"] = bSeven
+
+        noteMap["C1"] = cOne
+        noteMap["C2"] = cTwo
+        noteMap["C3"] = cThree
+
     }
 
     private fun playNote(noteId: Int) {
@@ -298,18 +339,18 @@ class MainActivity : AppCompatActivity() {
     private inner class SoundBoardListener : View.OnClickListener {
         override fun onClick(v: View?) {
             when(v?.id) {
-                R.id.button_main_a -> playNote(A3)
-                R.id.button_main_bb -> playNote(Bb3)
-                R.id.button_main_b -> playNote(B3)
-                R.id.button_main_c -> playNote(C4)
-                R.id.button_main_cSharp -> playNote(CSharp4)
-                R.id.button_main_d -> playNote(D4)
-                R.id.button_main_dSharp -> playNote(DSharp4)
-                R.id.button_main_e -> playNote(E4)
-                R.id.button_main_f -> playNote(F4)
-                R.id.button_main_fSharp -> playNote(FSharp4)
-                R.id.button_main_g -> playNote(G4)
-                R.id.button_main_gSharp -> playNote(GSharp4)
+                R.id.button_main_a -> playNote(aNote)
+                R.id.button_main_bb -> playNote(bbNote)
+                R.id.button_main_b -> playNote(bNote)
+                R.id.button_main_c -> playNote(cNote)
+                R.id.button_main_cSharp -> playNote(cSharpNote)
+                R.id.button_main_d -> playNote(dNote)
+                R.id.button_main_dSharp -> playNote(dSharpNote)
+                R.id.button_main_e -> playNote(eNote)
+                R.id.button_main_f -> playNote(fNote)
+                R.id.button_main_fSharp -> playNote(fSharpNote)
+                R.id.button_main_g -> playNote(gNote)
+                R.id.button_main_gSharp -> playNote(gSharpNote)
             }
         }
     }
