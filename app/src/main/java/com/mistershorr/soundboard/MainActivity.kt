@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
-import androidx.constraintlayout.widget.Group
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.mistershorr.soundboard.databinding.ActivityMainBinding
@@ -109,7 +108,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-    lateinit var noteList: ArrayList<Note>
+    lateinit var noteList: ArrayList<Chord>
     var separatedNoteList: ArrayList<Note> = ArrayList()
     var noteMap = HashMap<String, Int>()
 
@@ -147,7 +146,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun playSongWithChords(song: List<Chord>) {
+    private fun playSongWithChords(song: ArrayList<Chord>) {
         GlobalScope.launch(Dispatchers.Main) {
             binding.groupMainNoteButtons.referencedIds.forEach {
                 findViewById<Button>(it).isEnabled = false
@@ -156,8 +155,9 @@ class MainActivity : AppCompatActivity() {
         for(chord in song) {
             for (note in chord.chord) {
                 playNote(noteMap[note.note] ?: 0)
+                Log.d(TAG, "playSongWithChords: ${note.note}")
             }
-            delay(chord.duration.toLong() / 3)
+            delay(chord.duration.toLong())
         }
         GlobalScope.launch(Dispatchers.Main) {
             binding.groupMainNoteButtons.referencedIds.forEach {
@@ -195,7 +195,7 @@ class MainActivity : AppCompatActivity() {
         }
         Log.d(TAG, "onCreate: jsonString $jsonString")
         val gson = Gson()
-        val sType = object: TypeToken<List<Note>>() { }.type
+        val sType = object: TypeToken<List<Chord>>() { }.type
         noteList = gson.fromJson(jsonString, sType)
         Log.d(TAG, "$noteList")
     }
@@ -216,7 +216,7 @@ class MainActivity : AppCompatActivity() {
         binding.buttonMainGSharp.setOnClickListener(soundBoardListener)
         binding.buttonMainPlaySong.setOnClickListener {
             GlobalScope.launch {
-                playSong(noteList)
+                playSongWithChords(noteList)
             }
         }
     }
@@ -329,7 +329,56 @@ class MainActivity : AppCompatActivity() {
         noteMap["C1"] = cOne
         noteMap["C2"] = cTwo
         noteMap["C3"] = cThree
+        noteMap["C4"] = cFour
+        noteMap["C5"] = cFive
+        noteMap["C8"] = cEight
 
+        noteMap["C#2"] = cSharpTwo
+        noteMap["C#3"] = cSharpThree
+        noteMap["C#4"] = cSharpFour
+        noteMap["C#5"] = cSharpFive
+
+        noteMap["D1"] = dOne
+        noteMap["D2"] = dTwo
+        noteMap["D3"] = dThree
+        noteMap["D4"] = dFour
+        noteMap["D5"] = dFive
+
+        noteMap["D#1"] = dSharpOne
+        noteMap["D#2"] = dSharpTwo
+        noteMap["D#3"] = dSharpThree
+        noteMap["D#4"] = dSharpFour
+        noteMap["D#5"] = dSharpFive
+
+        noteMap["E1"] = eOne
+        noteMap["E2"] = eTwo
+        noteMap["E3"] = eThree
+        noteMap["E4"] = eFour
+        noteMap["E5"] = eFive
+
+        noteMap["F1"] = fOne
+        noteMap["F2"] = fTwo
+        noteMap["F3"] = fThree
+        noteMap["F4"] = fFour
+        noteMap["F5"] = fFive
+
+        noteMap["F#1"] = fSharpOne
+        noteMap["F#2"] = fSharpTwo
+        noteMap["F#3"] = fSharpThree
+        noteMap["F#4"] = fSharpFour
+        noteMap["F#5"] = fSharpFive
+
+        noteMap["G1"] = gOne
+        noteMap["G2"] = gTwo
+        noteMap["G3"] = gThree
+        noteMap["G4"] = gFour
+        noteMap["G5"] = gFive
+
+        noteMap["G#1"] = gSharpOne
+        noteMap["G#2"] = gSharpTwo
+        noteMap["G#3"] = gSharpThree
+        noteMap["G#4"] = gSharpFour
+        noteMap["G#5"] = gSharpFive
     }
 
     private fun playNote(noteId: Int) {
@@ -339,18 +388,18 @@ class MainActivity : AppCompatActivity() {
     private inner class SoundBoardListener : View.OnClickListener {
         override fun onClick(v: View?) {
             when(v?.id) {
-                R.id.button_main_a -> playNote(aNote)
-                R.id.button_main_bb -> playNote(bbNote)
-                R.id.button_main_b -> playNote(bNote)
-                R.id.button_main_c -> playNote(cNote)
-                R.id.button_main_cSharp -> playNote(cSharpNote)
-                R.id.button_main_d -> playNote(dNote)
-                R.id.button_main_dSharp -> playNote(dSharpNote)
-                R.id.button_main_e -> playNote(eNote)
-                R.id.button_main_f -> playNote(fNote)
-                R.id.button_main_fSharp -> playNote(fSharpNote)
-                R.id.button_main_g -> playNote(gNote)
-                R.id.button_main_gSharp -> playNote(gSharpNote)
+                R.id.button_main_a -> playNote(aThree)
+                R.id.button_main_bb -> playNote(bbThree)
+                R.id.button_main_b -> playNote(bThree)
+                R.id.button_main_c -> playNote(cFour)
+                R.id.button_main_cSharp -> playNote(cSharpFour)
+                R.id.button_main_d -> playNote(dFour)
+                R.id.button_main_dSharp -> playNote(dSharpFour)
+                R.id.button_main_e -> playNote(eFour)
+                R.id.button_main_f -> playNote(fFour)
+                R.id.button_main_fSharp -> playNote(fSharpFour)
+                R.id.button_main_g -> playNote(gFour)
+                R.id.button_main_gSharp -> playNote(gSharpFour)
             }
         }
     }
